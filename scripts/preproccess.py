@@ -2,6 +2,8 @@ import fitz
 import re
 import json
 
+BOOK_PATH = 'book.pdf'
+
 def get_text_from_novel(book_path): 
     ''' Retrieve the raw text from the novel for further processing'''
     doc = fitz.open(book_path)
@@ -28,11 +30,10 @@ def para_split(text):
 
     return new_paras
 
-def create_pre_paras(text, pre_paras_path):
+def create_pre_paras(pre_paras, pre_paras_path):
     '''Now that we got pre-processed paragraphs, these can be stored for further processing or as direct embeddings '''
-    pre_paras = para_split(text)
     para_export = {"pre_paras" : pre_paras}
-    with open('resources/pre_paras.json', 'w') as f:
+    with open(pre_paras_path, 'w', encoding='utf-8') as f:
         json.dump(para_export, f)
 
 def create_paragraphs(pre_paras):
@@ -43,3 +44,16 @@ def create_paragraphs(pre_paras):
         paragraphs.append("\n".join(pre_paras[i:i+4]))
 
     return paragraphs
+
+def store_paragraphs(paragraphs, para_path):
+    with open(para_path, 'w', encoding='utf-8') as file:
+        for para in paragraphs:
+            file.write(para.replace('\n', '').strip() + '\n')
+
+
+
+raw_text = get_text_from_novel(book_path=BOOK_PATH)
+pre_paras = para_split(text=raw_text)
+create_pre_paras(pre_paras=pre_paras, pre_paras_path='resources/pre_paras.json')
+paragraphs = create_paragraphs(pre_paras=pre_paras)
+store_paragraphs(paragraphs=paragraphs, para_path='resources/paragraphs.json')
