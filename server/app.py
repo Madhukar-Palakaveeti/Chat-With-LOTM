@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request
 import os
 import sys
-
 sys.path.insert(0, 'C:/Users/madhu/projects/chat_with_lotm')
+
+from flask import Flask, render_template, request
 from scripts import embedding
 from groq import Groq
 
