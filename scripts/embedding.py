@@ -25,3 +25,5 @@ def similarity_search(query : str, embeddings_file_path, top_k):
 
 def get_context(indices, paragraphs):
     return "\n".join(paragraphs[i] for i in indices)
+
+        

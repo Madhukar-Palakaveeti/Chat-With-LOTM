@@ -1,20 +1,18 @@
 import os
 import sys
-sys.path.insert(0, 'C:/Users/madhu/projects/chat_with_lotm')
+root = os.environ.get('ROOT')
+sys.path.insert(0, root)
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from scripts import embedding
 from groq import Groq
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/chat', methods=['GET','POST'])
 def chat(result=None):

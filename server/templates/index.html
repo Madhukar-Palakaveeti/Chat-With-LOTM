@@ -1,19 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat</title>
 </head>
+
+<style>
+    html,body {
+        height: 100%;
+        margin: 0;
+        padding : 0;        
+        font-family: 'Montserrat', sans-serif;
+        background-image: url('{{url_for("static", filename="bg_image.jpg")}}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
+        text-align: center;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        /* Dark overlay */
+    }
+
+    h1 {
+        font-size: 3em;
+        margin-top: 50px;
+        text-shadow: 2px 2px 8px #000;
+    }
+
+    input[type="text"] {
+        width: 60%;
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 5px;
+        border: none;
+        font-size: 1.2em;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .button-container {
+        margin-top: 20px;
+    }
+
+    input[type="submit"],
+    #clear {
+        padding: 15px 30px;
+        border-radius: 5px;
+        border: none;
+        background-color: #555;
+        color: white;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-left: 10px;
+    }
+
+    input[type="submit"]:hover,
+    #clear:hover {
+        background-color: #777;
+    }
+
+    .result {
+        margin-top: 20px;
+        background-color: #777 ; 
+        /* Light gray background */
+        border: 1px solid #ccc;
+        /* Gray border */
+        border-radius: 10px;
+        padding: 15px;
+        text-align: left;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+
+    .result p {
+        margin: 0;
+        /* Remove default margin */
+        color: white;
+        /* Dark text color */
+        line-height: 1.5;
+        text-align: justify;
+        /* Adjust line height for readability */
+    }
+</style>
+
 <body>
     <h1>Chat With LOTM</h1>
     <form id="chat_form" action="/chat" method="post">
         <input type="text" name="input_text">
-        </br><input type="submit" value="submit">
+        <div class="button-container">
+            <input type="submit" value="Submit">
+            <button type="button" id="clear">Clear</button>
+        </div>
     </form>
 
-    {% if result %}
+    <div class="result">
+        {% if result %}
             <p>{{ result }}</p>
-    {% endif %}
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById("clear").onclick = function() {
+            window.location.replace('/');
+        };
+
+        // Example of how you could show the result div dynamically if there is a result
+        const resultDiv = document.querySelector('.result');
+        if (resultDiv.innerHTML.trim() !== "") {
+            resultDiv.style.display = 'block';
+        }
+    </script>
+
 </body>
+
 </html>

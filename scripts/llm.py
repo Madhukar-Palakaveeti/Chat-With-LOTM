@@ -5,9 +5,9 @@ import os
 with open('resources/paragraphs.txt', 'r', encoding='utf-8') as file:
     paragraphs = file.readlines()
 
-paragraphs = paragraphs[:93524]
+
 groq_api_key = os.environ.get('GROQ_API_KEY')
-query = "How does gherman sparrow look like?"
+query = "What are the sequences of the error pathway?"
 
 scores, indices = embedding.similarity_search(query=query, embeddings_file_path='resources/embeddings.pt', top_k=5)
 context = embedding.get_context(indices=indices, paragraphs=paragraphs)
