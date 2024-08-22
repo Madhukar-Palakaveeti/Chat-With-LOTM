@@ -7,7 +7,8 @@ with open('resources/paragraphs.txt', 'r', encoding='utf-8') as file:
 
 paragraphs = paragraphs[:93524]
 groq_api_key = os.environ.get('GROQ_API_KEY')
-query = "where does the quote 'The taste of a demoness aint bad' come from?Hint - It has something to do with roselle"
+query = "How does gherman sparrow look like?"
+
 scores, indices = embedding.similarity_search(query=query, embeddings_file_path='resources/embeddings.pt', top_k=5)
 context = embedding.get_context(indices=indices, paragraphs=paragraphs)
 
@@ -23,8 +24,7 @@ chat_completion = client.chat.completions.create(
                   You are a novel reader who've completed the novel and now conversing with a fellow novel reader casually and answering some queries. You are provided with some context which is enough to answer the queries.
                     Query : {query}
                     Context : {context}
-            Answer with as many details as possible. Just remember you are a novel reader not someone answering based on the context
-            """,
+            Answer with as many details as possible and as relevant data as possible, with concise description. Also gather everything from the context and present it as a if you've read the whole novel rather than based on the scene. Also dont mention the characters appearing in the context, just try to integrate their stories into your answer rather than directly repeating the scene."""
         }
     ],
     model="llama3-8b-8192",
