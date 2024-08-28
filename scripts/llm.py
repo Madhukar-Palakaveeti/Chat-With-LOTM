@@ -1,19 +1,14 @@
-import embedding
+import rerank
 from groq import Groq
 import os
 
-with open('resources/paragraphs.txt', 'r', encoding='utf-8') as file:
-    paragraphs = file.readlines()
-
-
 groq_api_key = os.environ.get('GROQ_API_KEY')
-query = "What are the sequences of the error pathway?"
 
-scores, indices = embedding.similarity_search(query=query, embeddings_file_path='resources/embeddings.pt', top_k=5)
-context = embedding.get_context(indices=indices, paragraphs=paragraphs)
+query = "What are the sequences of the error pathway?"
+context = rerank.get_context(query=query)    
 
 client = Groq(
-    api_key=groq_api_key,
+    api_key=groq_api_key
 )
 
 chat_completion = client.chat.completions.create(

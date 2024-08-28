@@ -23,7 +23,7 @@ def similarity_search(query : str, embeddings_file_path, top_k):
     similarity_scores = bi_encoder.similarity(query_embed, embeddings)[0]
     return torch.topk(similarity_scores, k=top_k)
 
-def get_context(indices, paragraphs):
-    return "\n".join(paragraphs[i] for i in indices)
+def get_relevant_docs(indices, paragraphs):
+    return [paragraphs[i] for i in indices]
 
         
